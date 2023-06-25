@@ -15,7 +15,7 @@ class _ViewListState extends State<ViewList> {
   late List<Post>? _postList = [];
 
   void _getData() async {
-    _postList = (await Service2().getPost())!;
+    _postList = (await Service2().getPost());
     Future.delayed(const Duration(seconds: 1)).then((value) => setState(
           () {},
         ));

@@ -52,8 +52,8 @@ class _SignUpFormState extends State<SignUpForm> {
   String _name = '';
   String _email = '';
   // int _dob = -1;
-  String _maritalStatus = 'single';
-  int _selectGender = 0;
+  // String _maritalStatus = 'single';
+  String _selectGender = '';
   String _password = '';
   int _contactNo = -1;
 
@@ -154,35 +154,35 @@ class _SignUpFormState extends State<SignUpForm> {
       value: _selectGender,
       onChanged: (value) {
         setState(() {
-          _selectGender = int.parse(value.toString());
+          _selectGender = value.toString();
         });
       },
     ));
 
-    formWidget.add(Column(
-      children: <Widget>[
-        RadioListTile<String>(
-          title: const Text('Single'),
-          value: 'single',
-          groupValue: _maritalStatus,
-          onChanged: (value) {
-            setState(() {
-              _maritalStatus = value.toString();
-            });
-          },
-        ),
-        RadioListTile<String>(
-          title: const Text('Married'),
-          value: 'married',
-          groupValue: _maritalStatus,
-          onChanged: (value) {
-            setState(() {
-              _maritalStatus = value.toString();
-            });
-          },
-        ),
-      ],
-    ));
+    // formWidget.add(Column(
+    //   children: <Widget>[
+    //     RadioListTile<String>(
+    //       title: const Text('Single'),
+    //       value: 'single',
+    //       groupValue: _maritalStatus,
+    //       onChanged: (value) {
+    //         setState(() {
+    //           _maritalStatus = value.toString();
+    //         });
+    //       },
+    //     ),
+    //     RadioListTile<String>(
+    //       title: const Text('Married'),
+    //       value: 'married',
+    //       groupValue: _maritalStatus,
+    //       onChanged: (value) {
+    //         setState(() {
+    //           _maritalStatus = value.toString();
+    //         });
+    //       },
+    //     ),
+    //   ],
+    // ));
 
     formWidget.add(TextFormField(
       decoration: const InputDecoration(
@@ -312,7 +312,7 @@ class _SignUpFormState extends State<SignUpForm> {
 
       (await Service2().createPost(ps));
 
-      print("Marital Status " + _maritalStatus);
+      // print("Marital Status " + _maritalStatus);
       print("Password " + _password);
       print("Termschecked " + _termsChecked.toString());
       ScaffoldMessenger.of(context)

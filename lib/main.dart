@@ -3,8 +3,21 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:the_address_pms/log.dart';
 import 'package:the_address_pms/signUp.dart';
 
+import 'list.dart';
+
 void main() {
   runApp(LogInForm());
+}
+
+class MyWidget extends StatelessWidget {
+  const MyWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: ViewList(),
+    );
+  }
 }
 
 displayToastMassage(String massage, BuildContext) {

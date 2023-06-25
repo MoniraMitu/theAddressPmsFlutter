@@ -50,7 +50,7 @@ class _SignUpFormState extends State<SignUpForm> {
   String _email = '';
   // int _age = -1;
   String _maritalStatus = 'single';
-  int _selectGender = 0;
+  String _selectGender = '';
   String _password = '';
   int _contactNo = 0;
   bool _termsChecked = true;
@@ -85,7 +85,7 @@ class _SignUpFormState extends State<SignUpForm> {
     if (widget.postModel2 != null) {
       _name = widget.postModel2!.name.toString();
       _email = widget.postModel2!.email.toString();
-      _selectGender = widget.postModel2!.gender!;
+      _selectGender = widget.postModel2!.gender.toString();
       _password = widget.postModel2!.password.toString();
       _contactNo = widget.postModel2!.contactNo!;
 
@@ -169,7 +169,7 @@ class _SignUpFormState extends State<SignUpForm> {
       value: _selectGender,
       onChanged: (value) {
         setState(() {
-          _selectGender = int.parse(value.toString());
+          _selectGender = value.toString();
         });
       },
     ));

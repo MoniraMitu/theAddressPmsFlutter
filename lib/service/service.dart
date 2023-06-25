@@ -10,8 +10,12 @@ class Service2 {
 
   Future<List<Post>?> getPost() async {
     try {
-      var url = Uri.parse('http://192.168.20.34:8080/api/signUps');
-      var response = await http.get(url);
+      var url = Uri.parse(
+          'https://theaddresspmsrestapispring-production.up.railway.app/api/signUps');
+      var response =
+          await http.get(url, headers: {"Content-type": "application/json"});
+      print("-------------------------------");
+      print(response.body);
       if (response.statusCode == 200) {
         List<Post> _model = postsFromJson(response.body);
         return _model;
@@ -23,7 +27,9 @@ class Service2 {
 
   Future<void> deletePosts(int? id) async {
     try {
-      var url = Uri.parse("http://192.168.20.34:8080/api/signUps/" + '${id}');
+      var url = Uri.parse(
+          "https://theaddresspmsrestapispring-production.up.railway.app/api/signUps" +
+              '${id}');
       var response = await http.delete(url);
 
       // Response res = await delete('$apiUrl/$id');
@@ -39,7 +45,8 @@ class Service2 {
   }
 
   Future<List<Post>?> createPost(Post posts) async {
-    var url = Uri.parse('http://192.168.20.38:8080/api/signUps');
+    var url = Uri.parse(
+        'https://theaddresspmsrestapispring-production.up.railway.app/api/signUps');
     var response = await http.post(
       url,
       headers: {"Content-type": "application/json"},

@@ -14,7 +14,7 @@ String postToJson(Post data) => json.encode(data.toJson());
 class Post {
   String? name;
   String? email;
-  int? gender;
+  String? gender;
   String? password;
   int? contactNo;
   int? id;
