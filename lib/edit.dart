@@ -38,7 +38,7 @@ class editList extends StatelessWidget {
             TextButton(
                 onPressed: () async {
                   (await Service2().deletePosts(edit!.id));
-                  // print("Delete Call!");
+                  print("Delete Call!");
 
                   Navigator.pushAndRemoveUntil<dynamic>(
                     context,
@@ -51,6 +51,8 @@ class editList extends StatelessWidget {
                 child: Icon(Icons.delete)),
             TextButton(
                 onPressed: () {
+                  EditPage();
+
                   print("Update Call!");
 
                   Navigator.pushAndRemoveUntil<dynamic>(

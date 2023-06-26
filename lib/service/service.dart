@@ -18,6 +18,9 @@ class Service2 {
       print(response.body);
       if (response.statusCode == 200) {
         List<Post> _model = postsFromJson(response.body);
+
+        print("----------------From model---------------");
+        print(_model);
         return _model;
       }
     } catch (e) {
@@ -28,7 +31,7 @@ class Service2 {
   Future<void> deletePosts(int? id) async {
     try {
       var url = Uri.parse(
-          "https://theaddresspmsrestapispring-production.up.railway.app/api/signUps" +
+          "https://theaddresspmsrestapispring-production.up.railway.app/api/signUps/" +
               '${id}');
       var response = await http.delete(url);
 
@@ -45,17 +48,39 @@ class Service2 {
   }
 
   Future<List<Post>?> createPost(Post posts) async {
-    var url = Uri.parse(
-        'https://theaddresspmsrestapispring-production.up.railway.app/api/signUps');
-    var response = await http.post(
-      url,
-      headers: {"Content-type": "application/json"},
-      body: jsonEncode(posts),
-    );
+    // var url = Uri.parse(
+    //     'https://theaddresspmsrestapispring-production.up.railway.app/api/signUps');
+
+    // print("-----Post");
+    // print(posts);
+
+    // var response = await http.post(
+    //   url,
+    //   headers: {"Content-type": "application/json"},
+    //   body: jsonEncode(posts),
+    // );
+    // if (response.statusCode == 200) {
+    //   print("Update submitted");
+    // } else {
+    //   // throw Exception("Failed to load post");
+    //   print("Error---------------------------------");
+    // }
+
+    final String url =
+        'https://theaddresspmsrestapispring-production.up.railway.app/api/signUps';
+
+    print("-----Post");
+    print(posts.toJson());
+
+    var response = await http.post(Uri.parse(url),
+        headers: {"Content-Type": "application/json"},
+        body: jsonEncode(posts.toJson()));
+
     if (response.statusCode == 200) {
       print("Update submitted");
     } else {
-      throw Exception("Failed to load post");
+      // throw Exception("Failed to load post");
+      print("Error---------------------------------");
     }
   }
 }

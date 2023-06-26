@@ -53,7 +53,7 @@ class _SignUpFormState extends State<SignUpForm> {
   String _email = '';
   // int _dob = -1;
   // String _maritalStatus = 'single';
-  String _selectGender = '';
+  int _selectGender = 1;
   String _password = '';
   int _contactNo = -1;
 
@@ -154,7 +154,7 @@ class _SignUpFormState extends State<SignUpForm> {
       value: _selectGender,
       onChanged: (value) {
         setState(() {
-          _selectGender = value.toString();
+          _selectGender = int.parse(value.toString());
         });
       },
     ));
@@ -277,33 +277,29 @@ class _SignUpFormState extends State<SignUpForm> {
 
       // (await ProductApiService().createProduct(product));
       // // print("Delete Call!");
-      Navigator.pushAndRemoveUntil<dynamic>(
-        context,
-        MaterialPageRoute<dynamic>(
-          builder: (BuildContext context) => ViewList(),
-        ),
-        (route) => false,
-      );
+
       print("Name " + _name);
       print("Email " + _email);
       // print("Age " + _age.toString());
-      switch (_selectGender) {
-        case 0:
-          print("Gender Male");
-          break;
-        case 1:
-          print("Gender Female");
-          break;
-        case 3:
-          print("Gender Others");
-          break;
-      }
 
       Post ps = new Post();
       ps.name = _name;
       ps.email = _email;
       ps.contactNo = _contactNo;
-      ps.gender = _selectGender;
+
+      print("-----------------------------------------");
+      print(_selectGender);
+      switch (_selectGender) {
+        case 0:
+          ps.gender = " Male";
+          break;
+        case 1:
+          ps.gender = "Female";
+          break;
+        case 3:
+          ps.gender = "Other";
+          break;
+      }
       ps.password = _password;
 
       if (widget.postModel2 != null) {
@@ -313,29 +309,29 @@ class _SignUpFormState extends State<SignUpForm> {
       (await Service2().createPost(ps));
 
       // print("Marital Status " + _maritalStatus);
-      print("Password " + _password);
-      print("Termschecked " + _termsChecked.toString());
+
       ScaffoldMessenger.of(context)
           .showSnackBar(const SnackBar(content: Text('Form Submitted')));
 
-      // Navigator.pushAndRemoveUntil<dynamic>(context,
-      //   MaterialPageRoute<dynamic>(
-      //     builder: (BuildContext context) =>Home(),
-      //   ),
-      //       (route) =>false,
-      // );
-      // }
+      Navigator.pushAndRemoveUntil<dynamic>(
+        context,
+        MaterialPageRoute<dynamic>(
+          builder: (BuildContext context) => ViewList(),
+        ),
+        (route) => false,
+      );
 
-      final String url = 'http://192.168.20.38:8080/api/posts';
-      var reqBody = {
-        "name": _name,
-        "email": _email,
-      };
-      var response = await http.post(Uri.parse(url),
-          headers: {"Content-Type": "application/json"},
-          body: jsonEncode(reqBody));
+      // final String url =
+      //     'https://theaddresspmsrestapispring-production.up.railway.app/api/signUps';
+      // var reqBody = {
+      //   "name": _name,
+      //   "email": _email,
+      // };
+      // var response = await http.post(Uri.parse(url),
+      //     headers: {"Content-Type": "application/json"},
+      //     body: jsonEncode(reqBody));
 
-      var jsonResponse = jsonDecode(response.body);
+      // var jsonResponse = jsonDecode(response.body);
       // if (jsonResponse['status']) {
       //   print('Data Submitted');
       // } else {

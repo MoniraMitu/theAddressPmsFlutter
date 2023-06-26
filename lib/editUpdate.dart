@@ -49,11 +49,11 @@ class _SignUpFormState extends State<SignUpForm> {
   String _name = '';
   String _email = '';
   // int _age = -1;
-  String _maritalStatus = 'single';
-  String _selectGender = '';
+  // String _maritalStatus = 'single';
+  int _selectGender = 1;
   String _password = '';
   int _contactNo = 0;
-  bool _termsChecked = true;
+  // bool _termsChecked = true;
 
   List<DropdownMenuItem<int>> genderList = [];
 
@@ -85,7 +85,7 @@ class _SignUpFormState extends State<SignUpForm> {
     if (widget.postModel2 != null) {
       _name = widget.postModel2!.name.toString();
       _email = widget.postModel2!.email.toString();
-      _selectGender = widget.postModel2!.gender.toString();
+      _selectGender = int.parse(widget.postModel2!.gender.toString());
       _password = widget.postModel2!.password.toString();
       _contactNo = widget.postModel2!.contactNo!;
 
@@ -169,35 +169,35 @@ class _SignUpFormState extends State<SignUpForm> {
       value: _selectGender,
       onChanged: (value) {
         setState(() {
-          _selectGender = value.toString();
+          _selectGender = int.parse(value.toString());
         });
       },
     ));
 
-    formWidget.add(Column(
-      children: <Widget>[
-        RadioListTile<String>(
-          title: const Text('Single'),
-          value: 'single',
-          groupValue: _maritalStatus,
-          onChanged: (value) {
-            setState(() {
-              _maritalStatus = value.toString();
-            });
-          },
-        ),
-        RadioListTile<String>(
-          title: const Text('Married'),
-          value: 'married',
-          groupValue: _maritalStatus,
-          onChanged: (value) {
-            setState(() {
-              _maritalStatus = value.toString();
-            });
-          },
-        ),
-      ],
-    ));
+    // formWidget.add(Column(
+    //   children: <Widget>[
+    //     RadioListTile<String>(
+    //       title: const Text('Single'),
+    //       value: 'single',
+    //       groupValue: _maritalStatus,
+    //       onChanged: (value) {
+    //         setState(() {
+    //           _maritalStatus = value.toString();
+    //         });
+    //       },
+    //     ),
+    //     RadioListTile<String>(
+    //       title: const Text('Married'),
+    //       value: 'married',
+    //       groupValue: _maritalStatus,
+    //       onChanged: (value) {
+    //         setState(() {
+    //           _maritalStatus = value.toString();
+    //         });
+    //       },
+    //     ),
+    //   ],
+    // ));
 
     formWidget.add(
       TextFormField(
@@ -239,24 +239,24 @@ class _SignUpFormState extends State<SignUpForm> {
           }),
     );
 
-    formWidget.add(CheckboxListTile(
-      value: _termsChecked,
-      onChanged: (value) {
-        setState(() {
-          _termsChecked = value.toString().toLowerCase() == 'true';
-        });
-      },
-      subtitle: !_termsChecked
-          ? const Text(
-              'Required',
-              style: TextStyle(color: Colors.red, fontSize: 12.0),
-            )
-          : null,
-      title: const Text(
-        'I agree to the terms and condition',
-      ),
-      controlAffinity: ListTileControlAffinity.leading,
-    ));
+    // formWidget.add(CheckboxListTile(
+    //   value: _termsChecked,
+    //   onChanged: (value) {
+    //     setState(() {
+    //       _termsChecked = value.toString().toLowerCase() == 'true';
+    //     });
+    //   },
+    //   subtitle: !_termsChecked
+    //       ? const Text(
+    //           'Required',
+    //           style: TextStyle(color: Colors.red, fontSize: 12.0),
+    //         )
+    //       : null,
+    //   title: const Text(
+    //     'I agree to the terms and condition',
+    //   ),
+    //   controlAffinity: ListTileControlAffinity.leading,
+    // ));
 
     Future<void> onPressedSubmit() async {
       // if (_formKey.currentState!.validate() && _termsChecked) {
@@ -293,9 +293,9 @@ class _SignUpFormState extends State<SignUpForm> {
           print("Gender Others");
           break;
       }
-      print("Marital Status " + _maritalStatus);
+      // print("Marital Status " + _maritalStatus);
       print("Password " + _password);
-      print("Termschecked " + _termsChecked.toString());
+      // print("Termschecked " + _termsChecked.toString());
       ScaffoldMessenger.of(context)
           .showSnackBar(const SnackBar(content: Text('Form Submitted')));
 
@@ -307,7 +307,8 @@ class _SignUpFormState extends State<SignUpForm> {
       // );
       // }
 
-      final String url = 'http://192.168.20.38:8080/api/posts';
+      final String url =
+          'https://theaddresspmsrestapispring-production.up.railway.app/api/signUps';
       var reqBody = {
         "name": _name,
         "email": _email,
