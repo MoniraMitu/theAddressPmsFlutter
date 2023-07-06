@@ -17,54 +17,60 @@ class editList extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(19.0),
       child: SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
-        child: Row(
+        scrollDirection: Axis.vertical,
+        child: Column(
           children: [
-            SizedBox(width: 1.0),
+            SizedBox(height: 1.0),
             Text(
               "Id : " + edit!.id.toString(),
-              style: TextStyle(fontSize: 15, fontFamily: "bolt-semibold"),
-              textAlign: TextAlign.left,
+              style: TextStyle(fontSize: 30, fontFamily: "bolt-semibold"),
+              textAlign: TextAlign.center,
             ),
-            SizedBox(width: 1.0), // give it width
+            SizedBox(height: 1.0), // give it width
 
             Text(
               edit!.email.toString(),
-              style: TextStyle(fontSize: 10, fontFamily: "bolt-semibold"),
-              textAlign: TextAlign.left,
+              style: TextStyle(fontSize: 30, fontFamily: "bolt-semibold"),
+              textAlign: TextAlign.center,
             ),
-            SizedBox(width: 1.0), // give it width
+            SizedBox(height: 1.0), // give it width
 
-            TextButton(
-                onPressed: () async {
-                  (await Service2().deletePosts(edit!.id));
-                  print("Delete Call!");
+            Container(
+              child: Center(
+                child: Row(children: [
+                  TextButton(
+                      onPressed: () async {
+                        (await Service2().deletePosts(edit!.id));
+                        print("Delete Call!");
 
-                  Navigator.pushAndRemoveUntil<dynamic>(
-                    context,
-                    MaterialPageRoute<dynamic>(
-                      builder: (BuildContext context) => ViewList(),
-                    ),
-                    (route) => false,
-                  );
-                },
-                child: Icon(Icons.delete)),
-            TextButton(
-                onPressed: () {
-                  EditPage();
+                        Navigator.pushAndRemoveUntil<dynamic>(
+                          context,
+                          MaterialPageRoute<dynamic>(
+                            builder: (BuildContext context) => ViewList(),
+                          ),
+                          (route) => false,
+                        );
+                      },
+                      child: Icon(Icons.delete)),
+                  TextButton(
+                      onPressed: () {
+                        EditPage();
 
-                  print("Update Call!");
+                        print("Update Call!");
 
-                  Navigator.pushAndRemoveUntil<dynamic>(
-                    context,
-                    MaterialPageRoute<dynamic>(
-                      builder: (BuildContext context) =>
-                          EditPage(postModel: edit),
-                    ),
-                    (route) => false,
-                  );
-                },
-                child: Icon(Icons.update)),
+                        Navigator.pushAndRemoveUntil<dynamic>(
+                          context,
+                          MaterialPageRoute<dynamic>(
+                            builder: (BuildContext context) =>
+                                EditPage(postModel: edit),
+                          ),
+                          (route) => false,
+                        );
+                      },
+                      child: Icon(Icons.update)),
+                ]),
+              ),
+            ),
           ],
           // Text(_postsModel![index].body.toString()),
         ),

@@ -7,9 +7,9 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:http/http.dart' as http;
 import 'package:the_address_pms/Model/signUpmodel.dart';
 import 'package:the_address_pms/list.dart';
+import 'package:the_address_pms/service/service.dart';
 
 class EditPage extends StatefulWidget {
-  // const editPage({super.key});
   final Post? postModel;
   EditPage({this.postModel});
 
@@ -34,8 +34,6 @@ class _EditPageState extends State<EditPage> {
 }
 
 class SignUpForm extends StatefulWidget {
-  // const SignUpForm({super.key});
-
   final Post? postModel2;
   SignUpForm({this.postModel2});
 
@@ -48,12 +46,10 @@ class _SignUpFormState extends State<SignUpForm> {
 
   String _name = '';
   String _email = '';
-  // int _age = -1;
-  // String _maritalStatus = 'single';
+
   int _selectGender = 1;
   String _password = '';
   int _contactNo = 0;
-  // bool _termsChecked = true;
 
   List<DropdownMenuItem<int>> genderList = [];
 
@@ -61,12 +57,12 @@ class _SignUpFormState extends State<SignUpForm> {
     genderList = [];
     genderList.add(const DropdownMenuItem(
       child: Text('Female'),
-      value: 1,
+      value: 0,
     ));
 
     genderList.add(const DropdownMenuItem(
       child: Text('Male'),
-      value: 0,
+      value: 1,
     ));
 
     genderList.add(const DropdownMenuItem(
@@ -79,16 +75,22 @@ class _SignUpFormState extends State<SignUpForm> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
 
     if (widget.postModel2 != null) {
       _name = widget.postModel2!.name.toString();
       _email = widget.postModel2!.email.toString();
-      _selectGender = int.parse(widget.postModel2!.gender.toString());
+
+      if (widget.postModel2!.gender.toString() == "Female") {
+        _selectGender = 0;
+      } else if (widget.postModel2!.gender.toString() == "Others") {
+        _selectGender = 2;
+      } else {
+        _selectGender = 1;
+      }
+
       _password = widget.postModel2!.password.toString();
       _contactNo = widget.postModel2!.contactNo!;
-
       _id = widget.postModel2!.id!;
     }
   }
@@ -120,49 +122,17 @@ class _SignUpFormState extends State<SignUpForm> {
       onChanged: (value) {
         _name = value.toString();
       },
-
-      //   onSaved: (value) {
-      //   setState(() {
-      //     _name = value.toString();
-      //   });
-      // },
     ));
     formWidget.add(TextFormField(
       initialValue: _email,
       decoration:
           const InputDecoration(labelText: 'Enter email', hintText: 'Email'),
       keyboardType: TextInputType.emailAddress,
-      // onSaved: (value) {
-      //   setState(() {
-      //     _email = value.toString();
-      //   });
-      // },
-
       onChanged: (value) {
         _email = value.toString();
       },
     ));
 
-    // formWidget.add(TextFormField(
-    //   decoration:
-    //       const InputDecoration(hintText: 'Age', labelText: 'Enter Age'),
-    //   keyboardType: TextInputType.number,
-    //   validator: (value) {
-    //     if (value!.isEmpty) {
-    //       return 'Enter age';
-    //     } else {
-    //       return null;
-    //     }
-    //   },
-    //   onChanged: (value) {
-    //     _age = int.parse(value.toString());
-    //   },
-    //   //  onSaved: (value) {
-    //   //   setState(() {
-    //   //     _age = int.parse(value.toString());
-    //   //   });
-    //   // }
-    // ));
     formWidget.add(DropdownButton(
       hint: const Text('select gender'),
       items: genderList,
@@ -174,34 +144,10 @@ class _SignUpFormState extends State<SignUpForm> {
       },
     ));
 
-    // formWidget.add(Column(
-    //   children: <Widget>[
-    //     RadioListTile<String>(
-    //       title: const Text('Single'),
-    //       value: 'single',
-    //       groupValue: _maritalStatus,
-    //       onChanged: (value) {
-    //         setState(() {
-    //           _maritalStatus = value.toString();
-    //         });
-    //       },
-    //     ),
-    //     RadioListTile<String>(
-    //       title: const Text('Married'),
-    //       value: 'married',
-    //       groupValue: _maritalStatus,
-    //       onChanged: (value) {
-    //         setState(() {
-    //           _maritalStatus = value.toString();
-    //         });
-    //       },
-    //     ),
-    //   ],
-    // ));
-
     formWidget.add(
       TextFormField(
           key: _passKey,
+          initialValue: _password,
           obscureText: true,
           decoration: const InputDecoration(
               hintText: 'Password', labelText: 'Enter Password'),
@@ -219,6 +165,7 @@ class _SignUpFormState extends State<SignUpForm> {
     formWidget.add(
       TextFormField(
           obscureText: true,
+          initialValue: _password,
           decoration: const InputDecoration(
               hintText: 'Confirm Password',
               labelText: 'Enter Confirm Password'),
@@ -239,49 +186,10 @@ class _SignUpFormState extends State<SignUpForm> {
           }),
     );
 
-    // formWidget.add(CheckboxListTile(
-    //   value: _termsChecked,
-    //   onChanged: (value) {
-    //     setState(() {
-    //       _termsChecked = value.toString().toLowerCase() == 'true';
-    //     });
-    //   },
-    //   subtitle: !_termsChecked
-    //       ? const Text(
-    //           'Required',
-    //           style: TextStyle(color: Colors.red, fontSize: 12.0),
-    //         )
-    //       : null,
-    //   title: const Text(
-    //     'I agree to the terms and condition',
-    //   ),
-    //   controlAffinity: ListTileControlAffinity.leading,
-    // ));
-
     Future<void> onPressedSubmit() async {
-      // if (_formKey.currentState!.validate() && _termsChecked) {
-      //   _formKey.currentState?.save();
-
-      // Product product = new Product();
-
-      // product.name = _name;
-      // product.email = _email;
-      // product.price = _age.toString();
-      // product.quantity = _password;
-
-      // (await ProductApiService().createProduct(product));
-      // // print("Delete Call!");
-      Navigator.pushAndRemoveUntil<dynamic>(
-        context,
-        MaterialPageRoute<dynamic>(
-          builder: (BuildContext context) => ViewList(),
-        ),
-        (route) => false,
-      );
-
       print("Name " + _name);
       print("Email " + _email);
-      // print("Age " + _age.toString());
+
       switch (_selectGender) {
         case 0:
           print("Gender Male");
@@ -293,36 +201,46 @@ class _SignUpFormState extends State<SignUpForm> {
           print("Gender Others");
           break;
       }
-      // print("Marital Status " + _maritalStatus);
+
       print("Password " + _password);
-      // print("Termschecked " + _termsChecked.toString());
+
       ScaffoldMessenger.of(context)
           .showSnackBar(const SnackBar(content: Text('Form Submitted')));
 
-      // Navigator.pushAndRemoveUntil<dynamic>(context,
-      //   MaterialPageRoute<dynamic>(
-      //     builder: (BuildContext context) =>Home(),
-      //   ),
-      //       (route) =>false,
-      // );
-      // }
+      Post ps = new Post();
 
-      final String url =
-          'https://theaddresspmsrestapispring-production.up.railway.app/api/signUps';
-      var reqBody = {
-        "name": _name,
-        "email": _email,
-      };
-      var response = await http.post(Uri.parse(url),
-          headers: {"Content-Type": "application/json"},
-          body: jsonEncode(reqBody));
+      ps.name = _name;
+      ps.email = _email;
+      ps.contactNo = _contactNo;
 
-      var jsonResponse = jsonDecode(response.body);
-      // if (jsonResponse['status']) {
-      //   print('Data Submitted');
-      // } else {
-      //   print('something went wrong');
-      // }
+      print("-----------------------------------------");
+      print(_selectGender);
+      switch (_selectGender) {
+        case 0:
+          ps.gender = " Male";
+          break;
+        case 1:
+          ps.gender = "Female";
+          break;
+        case 3:
+          ps.gender = "Other";
+          break;
+      }
+      ps.password = _password;
+
+      if (widget.postModel2 != null) {
+        ps.id = _id;
+      }
+
+      (await Service2().createPost(ps));
+
+      Navigator.pushAndRemoveUntil<dynamic>(
+        context,
+        MaterialPageRoute<dynamic>(
+          builder: (BuildContext context) => ViewList(),
+        ),
+        (route) => false,
+      );
     }
 
     formWidget.add(ElevatedButton(
@@ -338,12 +256,6 @@ class _SignUpFormState extends State<SignUpForm> {
             ),
             (route) => false,
           );
-          // Navigator.pushAndRemoveUntil<dynamic>(context,
-          //   MaterialPageRoute<dynamic>(
-          //     builder: (BuildContext context) =>Home(),
-          //   ),
-          //       (route) =>false,
-          // );
         }));
 
     return formWidget;

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:the_address_pms/list.dart';
 import 'package:the_address_pms/main.dart';
 import 'package:the_address_pms/signUp.dart';
 
@@ -98,16 +99,26 @@ class _LogInState extends State<LogIn> {
                     ),
                   ),
                   onPressed: () {
+                   
                     if (!email.text.contains("@")) {
                       displayToastMassage("Invalid email", BuildContext);
-                    } else if (password.text.length < 3) {
+                    } 
+                    if (password.text.length < 3) {
                       displayToastMassage("Invalid password", BuildContext);
                     }
-                    {
-                      displayToastMassage(
-                          "Hello !! ${email.text} !! ${password.text}",
-                          BuildContext);
-                    }
+                    // {
+                    //   displayToastMassage(
+                    //       "Hello !! ${email.text} !! ${password.text}",
+                    //       BuildContext);
+                    // }
+
+                     Navigator.pushAndRemoveUntil<dynamic>(
+                      context,
+                      MaterialPageRoute<dynamic>(
+                        builder: (BuildContext context) => ViewList(),
+                      ),
+                      (route) => false,
+                    );
                   }),
               TextButton(
                   // style: ButtonStyle(
