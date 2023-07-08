@@ -38,7 +38,6 @@ class _SignUpState extends State<SignUp> {
 }
 
 class SignUpForm extends StatefulWidget {
-  // const SignUpForm({super.key});
   final Post? postModel2;
   SignUpForm({this.postModel2});
 
@@ -106,48 +105,16 @@ class _SignUpFormState extends State<SignUpForm> {
       onChanged: (value) {
         _name = value.toString();
       },
-
-      //   onSaved: (value) {
-      //   setState(() {
-      //     _name = value.toString();
-      //   });
-      // },
     ));
     formWidget.add(TextFormField(
       decoration:
           const InputDecoration(labelText: 'Enter email', hintText: 'Email'),
       keyboardType: TextInputType.emailAddress,
-      // onSaved: (value) {
-      //   setState(() {
-      //     _email = value.toString();
-      //   });
-      // },
-
       onChanged: (value) {
         _email = value.toString();
       },
     ));
 
-    // formWidget.add(TextFormField(
-    //   decoration:
-    //       const InputDecoration(hintText: 'Age', labelText: 'Enter Age'),
-    //   keyboardType: TextInputType.number,
-    //   validator: (value) {
-    //     if (value!.isEmpty) {
-    //       return 'Enter age';
-    //     } else {
-    //       return null;
-    //     }
-    //   },
-    //   onChanged: (value) {
-    //     _dob = int.parse(value.toString());
-    //   },
-    //   //  onSaved: (value) {
-    //   //   setState(() {
-    //   //     _age = int.parse(value.toString());
-    //   //   });
-    //   // }
-    // ));
     formWidget.add(DropdownButton(
       hint: const Text('select gender'),
       items: genderList,
@@ -158,31 +125,6 @@ class _SignUpFormState extends State<SignUpForm> {
         });
       },
     ));
-
-    // formWidget.add(Column(
-    //   children: <Widget>[
-    //     RadioListTile<String>(
-    //       title: const Text('Single'),
-    //       value: 'single',
-    //       groupValue: _maritalStatus,
-    //       onChanged: (value) {
-    //         setState(() {
-    //           _maritalStatus = value.toString();
-    //         });
-    //       },
-    //     ),
-    //     RadioListTile<String>(
-    //       title: const Text('Married'),
-    //       value: 'married',
-    //       groupValue: _maritalStatus,
-    //       onChanged: (value) {
-    //         setState(() {
-    //           _maritalStatus = value.toString();
-    //         });
-    //       },
-    //     ),
-    //   ],
-    // ));
 
     formWidget.add(TextFormField(
       decoration: const InputDecoration(
@@ -198,11 +140,6 @@ class _SignUpFormState extends State<SignUpForm> {
       onChanged: (value) {
         _contactNo = int.parse(value.toString());
       },
-      //  onSaved: (value) {
-      //   setState(() {
-      //     _age = int.parse(value.toString());
-      //   });
-      // }
     ));
 
     formWidget.add(
@@ -265,22 +202,8 @@ class _SignUpFormState extends State<SignUpForm> {
     ));
 
     Future<void> onPressedSubmit() async {
-      // if (_formKey.currentState!.validate() && _termsChecked) {
-      //   _formKey.currentState?.save();
-
-      // Product product = new Product();
-
-      // product.name = _name;
-      // product.email = _email;
-      // product.price = _age.toString();
-      // product.quantity = _password;
-
-      // (await ProductApiService().createProduct(product));
-      // // print("Delete Call!");
-
       print("Name " + _name);
       print("Email " + _email);
-      // print("Age " + _age.toString());
 
       Post ps = new Post();
       ps.name = _name;
@@ -308,8 +231,6 @@ class _SignUpFormState extends State<SignUpForm> {
 
       (await Service2().createPost(ps));
 
-      // print("Marital Status " + _maritalStatus);
-
       ScaffoldMessenger.of(context)
           .showSnackBar(const SnackBar(content: Text('Form Submitted')));
 
@@ -320,23 +241,6 @@ class _SignUpFormState extends State<SignUpForm> {
         ),
         (route) => false,
       );
-
-      // final String url =
-      //     'https://theaddresspmsrestapispring-production.up.railway.app/api/signUps';
-      // var reqBody = {
-      //   "name": _name,
-      //   "email": _email,
-      // };
-      // var response = await http.post(Uri.parse(url),
-      //     headers: {"Content-Type": "application/json"},
-      //     body: jsonEncode(reqBody));
-
-      // var jsonResponse = jsonDecode(response.body);
-      // if (jsonResponse['status']) {
-      //   print('Data Submitted');
-      // } else {
-      //   print('something went wrong');
-      // }
     }
 
     formWidget.add(ElevatedButton(
@@ -352,12 +256,6 @@ class _SignUpFormState extends State<SignUpForm> {
             ),
             (route) => false,
           );
-          // Navigator.pushAndRemoveUntil<dynamic>(context,
-          //   MaterialPageRoute<dynamic>(
-          //     builder: (BuildContext context) =>Home(),
-          //   ),
-          //       (route) =>false,
-          // );
         }));
 
     return formWidget;
@@ -366,14 +264,14 @@ class _SignUpFormState extends State<SignUpForm> {
 
 validateEmail(String? value) {
   if (value!.isEmpty) {
-    return 'please enter email';
+    return 'Please enter email';
   }
   Pattern pattern =
       r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
 
   RegExp regex = RegExp(pattern.toString());
   if (!regex.hasMatch(value.toString())) {
-    return 'enter valid email';
+    return 'Enter valid email';
   } else {
     return null;
   }

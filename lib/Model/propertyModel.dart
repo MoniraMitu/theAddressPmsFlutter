@@ -4,6 +4,9 @@
 
 import 'dart:convert';
 
+PropertyModel postFromJson(String str) =>
+    PropertyModel.fromJson(json.decode(str));
+
 PropertyModel propertyModelFromJson(String str) =>
     PropertyModel.fromJson(json.decode(str));
 

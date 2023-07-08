@@ -89,9 +89,9 @@ class _LogInState extends State<LogIn> {
                           RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(24.0)))),
                   child: Container(
-                    height: 50.0,
+                    height: 30.0,
                     child: Text(
-                      "Log IN",
+                      "Log In",
                       style: const TextStyle(
                         fontSize: 18.0,
                         color: Colors.pink,
@@ -99,20 +99,14 @@ class _LogInState extends State<LogIn> {
                     ),
                   ),
                   onPressed: () {
-                   
                     if (!email.text.contains("@")) {
                       displayToastMassage("Invalid email", BuildContext);
-                    } 
+                    }
                     if (password.text.length < 3) {
                       displayToastMassage("Invalid password", BuildContext);
                     }
-                    // {
-                    //   displayToastMassage(
-                    //       "Hello !! ${email.text} !! ${password.text}",
-                    //       BuildContext);
-                    // }
 
-                     Navigator.pushAndRemoveUntil<dynamic>(
+                    Navigator.pushAndRemoveUntil<dynamic>(
                       context,
                       MaterialPageRoute<dynamic>(
                         builder: (BuildContext context) => ViewList(),

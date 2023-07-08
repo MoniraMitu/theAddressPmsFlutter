@@ -48,23 +48,7 @@ class Service2 {
   }
 
   Future<List<Post>?> createPost(Post posts) async {
-    // var url = Uri.parse(
-    //     'https://theaddresspmsrestapispring-production.up.railway.app/api/signUps');
-
-    // print("-----Post");
-    // print(posts);
-
-    // var response = await http.post(
-    //   url,
-    //   headers: {"Content-type": "application/json"},
-    //   body: jsonEncode(posts),
-    // );
-    // if (response.statusCode == 200) {
-    //   print("Update submitted");
-    // } else {
-    //   // throw Exception("Failed to load post");
-    //   print("Error---------------------------------");
-    // }
+  
 
     final String url =
         'https://theaddresspmsrestapispring-production.up.railway.app/api/signUps';
